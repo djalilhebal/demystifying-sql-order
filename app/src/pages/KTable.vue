@@ -2,8 +2,7 @@
   <q-table virtual-scroll ref="table" style="flex-shrink: 1; flex-grow: 1; height: 50vh; margin: auto;" flat :rows="rows"
     :rows-per-page-options="[0]" :columns="[
     { name: 'index', label: 'Index', align: 'left', field: '_' },
-    { name: 'name', label: 'Name', field: 'name' },
-    { name: 'age', label: 'Age', field: 'age' },
+    ...fieldColumns,
   ]">
 
     <template v-slot:top>
@@ -26,7 +25,6 @@
     </template>
 
   </q-table>
-
 </template>
 
 <script setup lang="ts">
@@ -34,6 +32,10 @@ import { ref, computed } from 'vue';
 import { QTable } from 'quasar';
 
 const props = defineProps({
+  fields: {
+    type: Array,
+    required: true,
+  },
   rows: {
     type: Array,
     required: true,
@@ -47,6 +49,12 @@ const props = defineProps({
 });
 
 const table = ref<QTable | null>(null);
+
+const fieldColumns = computed(() => {
+  return props.fields.map((field: any) => {
+    return { name: field, label: field, field: field };
+  });
+});
 
 const targetIndex = computed(() => {
   return props.rows.findIndex((row: any) => {

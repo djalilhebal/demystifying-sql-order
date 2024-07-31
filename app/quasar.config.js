@@ -108,6 +108,7 @@ module.exports = configure((/* ctx */) => ({
   // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
   framework: {
     config: {
+      dark: true, // force dark theme
       brand: {
         primary: '#9C27B0', // Purple
       },

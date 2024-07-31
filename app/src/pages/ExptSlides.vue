@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-col">
     <q-stepper ref="stepper" class="flex-grow" style="width: 100%;" v-model="step" contracted>
-      <q-step v-for="step in exptTwoStore.steps" :name="step.name" :title="step.name + ''"
+      <q-step v-for="step in exptStore.steps" :name="step.name" :title="step.name + ''"
         :done="step.done || step.commandExecuted">
         <section class="row">
           <QMarkdown class="col-8 q-ma-md" content-class="text-body1" no-line-numbers>
@@ -12,17 +12,18 @@
             ```
           </QMarkdown>
 
-          <KTable v-if="step.fetchesRows" :rows="step.dataRows" :getShouldHighlight="getShouldHighlight"></KTable>
+          <KTable v-if="step.fetchesRows" :fields="exptStore.fields" :rows="step.dataRows"
+            :getShouldHighlight="exptStore.getIsTarget"></KTable>
         </section>
 
-        <q-btn label="Execute" @click="exptTwoStore.execute(step);" :loading="step.commandLoading"
+        <q-btn label="Execute" @click="exptStore.execute(step);" :loading="step.commandLoading"
           :disable="step.commandExecuted" :icon="step.commandExecuted ? 'check' : undefined"
           :color="step.commandExecuted ? 'green' : 'primary'"></q-btn>
 
         <q-separator class="q-ma-md"></q-separator>
 
-        <q-btn outline :disable="!step.explainable" :color="step.explainable ? 'black' : 'grey'" label="Explain"
-          :loading="step.explainLoading" @click="exptTwoStore.explain(step)">
+        <q-btn outline :disable="!step.explainable" :color="step.explainable ? 'white' : 'grey`'" label="Explain"
+          :loading="step.explainLoading" @click="exptStore.explain(step)">
         </q-btn>
         <q-card v-if="step.explainOutput">
           <q-card-section>
@@ -52,23 +53,18 @@ import { useQuasar } from 'quasar';
 
 import KTable from './KTable.vue';
 
+const props = defineProps({
+  exptStore: {
+    type: Object,
+    required: true,
+  }
+});
+
 const $q = useQuasar();
-
-import { useExptTwoStore } from 'src/stores/expt-two-store';
-
-const exptTwoStore = useExptTwoStore();
 
 const stepper = ref(null);
 
 const step = ref(1);
-
-// ---
-
-const targetName = 'Damian';
-
-function getShouldHighlight(data: any) {
-  return data.name === targetName;
-}
 
 // ---
 
@@ -78,7 +74,7 @@ onMounted(async () => {
     message: 'Initializing DB...'
   });
 
-  await exptTwoStore.initDb();
+  await props.exptStore.initDb();
 
   $q.loading.hide();
 });

@@ -3,68 +3,38 @@ import { ref } from 'vue';
 
 import { createDb, DbType  } from 'src/core/db';
 
-const fields = ['name', 'age'];
+const fields = ['id', 'value'];
 
 function getIsTarget(data: any) {
-  return data.name === 'Damian';
+  return data.id === 2;
 }
 
 const SQL_COMMANDS = [
-`SELECT setseed(0.444);`,
-
-`CREATE TABLE characters (
-  id SERIAL PRIMARY KEY,
-  name TEXT,
-  age INTEGER,
-  description TEXT DEFAULT repeat(md5(random()::text), 2)
-);`,
-
-`/* C > D > E > A > B */
-INSERT INTO characters(name, age)
-    VALUES
-    ('Ciel', 13),
-    ('Damian', 45),
-    ('Edward', 18),
-    ('Ash', 777),
-    ('Baldroy', 37);
+`CREATE TABLE names (
+    id int primary key generated always as identity,
+    value text
+);
 `,
 
-`-- Insert 10,000 random entries
-INSERT INTO characters (name, age)
-SELECT
-    -- a random name starting with A-Z
-    chr(65 + floor(random() * 26)::integer) || substr(md5(random()::text), 1, 9) AS name,
-    -- a random age between 1 and 80
-    floor(random() * 80 + 1)::integer AS age
-FROM
-    generate_series(1, 10000);
+`INSERT INTO names (value) VALUES
+    ('alice'),
+    ('bob'),
+    ('ciara'),
+    ('diana'),
+    ('emma');
 `,
 
-`CREATE INDEX idx_characters_age ON characters(age);`,
+`SELECT * FROM names;`,
 
-`CREATE INDEX idx_characters_age_and_name ON characters(age, name);
--- Or:
---CREATE INDEX idx_characters_age_include_name ON characters(age) INCLUDE (name);
-`,
+`UPDATE names SET value = 'barbara' WHERE id = 2;`,
 
-`/* To update stats */
-VACUUM ANALYZE;
-`,
+`/* Optional: */
+VACUUM names;`,
 
-`SELECT name, age
-FROM characters
-WHERE age >= 40
-LIMIT 10;
-`,
-
-`SELECT name, age
-FROM characters
-WHERE age >= 40
-LIMIT 700;
-`,
+`SELECT * FROM names;`,
 ];
 
-export const useExptTwoStore = defineStore('expt-two', () => {
+export const useExptOneStore = defineStore('expt-one', () => {
 
   const db = ref<DbType | null>(null);
 
@@ -84,7 +54,7 @@ export const useExptTwoStore = defineStore('expt-two', () => {
   }
 
   function doesFetchRows(command: string): boolean {
-    return command.trim().startsWith('SELECT name');
+    return command.trim().startsWith('SELECT *');
   }
 
   async function explainCommand(command: string): Promise<string> {
