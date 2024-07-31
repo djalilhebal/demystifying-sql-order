@@ -64,7 +64,7 @@ CREATE TABLE characters (
 ```
 
 ```sql
-/* C D E A B */
+/* C > D > E > A > B */
 INSERT INTO characters(name, age)
     VALUES
     ('Ciel', 13),
@@ -88,13 +88,20 @@ FROM
 
 ```sql
 CREATE INDEX idx_characters_age ON characters(age);
+```
+
+```sql
 CREATE INDEX idx_characters_age_and_name ON characters(age, name);
 -- Or:
 --CREATE INDEX idx_characters_age_include_name ON characters(age) INCLUDE (name);
+```
 
+```sql
 /* To update stats */
 VACUUM ANALYZE;
+```
 
+```sql
 /* See most common values, etc. */
 SELECT attname, inherited, n_distinct,
        array_to_string(most_common_vals, E'\n') as most_common_vals
@@ -109,8 +116,15 @@ TLDR:
 - Limit 100 uses index scan, this is why we get ordered results.
 (by default, Postgres uses B-Tree, which is ordered).
 
+```sql
+SELECT name, age
+FROM characters
+WHERE age >= 40
+LIMIT 10;
 ```
-tea=# select name, age from characters where age >= 40 limit 10;
+
+Output:
+```
     name    | age
 ------------+-----
  Damian     |  45
@@ -138,8 +152,15 @@ tea=# explain select name, age from characters where age >= 40 limit 10;
 
 ---
 
+```sql
+SELECT name, age
+FROM characters
+WHERE age >= 40
+LIMIT 100;
 ```
-tea=# select name, age from characters where age >= 40 limit 100;
+
+Output:
+```
     name    | age
 ------------+-----
  A005b57af5 |  40
