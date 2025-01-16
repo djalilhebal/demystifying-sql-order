@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { QMarkdown } from '@quasar/quasar-ui-qmarkdown';
-import '@quasar/quasar-ui-qmarkdown/dist/index.css'
+import '@quasar/quasar-ui-qmarkdown/dist/index.css';
 import 'prismjs/components/prism-sql';
 import { useQuasar } from 'quasar';
 
@@ -57,7 +57,7 @@ const props = defineProps({
   exptStore: {
     type: Object,
     required: true,
-  }
+  },
 });
 
 const $q = useQuasar();
@@ -71,7 +71,7 @@ const step = ref(1);
 onMounted(async () => {
   $q.loading.show({
     delay: 300, // ms
-    message: 'Initializing DB...'
+    message: 'Initializing DB...',
   });
 
   await props.exptStore.initDb();

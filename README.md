@@ -1,4 +1,4 @@
-# demystifying-sql-order
+# Demystifying SQL Order
 
 A presentation, a set of PostgreSQL experiments, Web-based demo(s)...
 
@@ -14,11 +14,12 @@ SELECT setseed(0.666);
 ```
 
 
-## Technology used
+## Technologies used
 
 The live demo relies on the following:
 
 - Quasar v2
+
     * [Carousel](https://quasar.dev/vue-components/carousel)
 
     * [Stepper](https://quasar.dev/vue-components/stepper)
@@ -31,12 +32,12 @@ The live demo relies on the following:
         + PrismJS
         + `markdown-it`
 
-- PostgresMock (`pgmock`)
+- `pgmock`
 
 
 ### Postgres in the browser options
 
-- https://github.com/electric-sql/pglite
+- [x] ~~PGlite~~ https://github.com/electric-sql/pglite
 
     * Package: `@electric-sql/pglite 0.2.0-alpha.3`
     Running `SELECT version();` returned `PostgreSQL 16.3 on x86_64-pc-linux-gnu, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 3.1.64-git (a1fe3902bf73a3802eae0357d273d0e37ea79898), 32-bit`.
@@ -48,9 +49,9 @@ The live demo relies on the following:
     * I even tried to adjuct costs of the default _tablespaces_
     (`ALTER TABLESPACE pg_default SET (seq_page_cost = 1, random_page_cost = 55);`).
 
-    * It cannot create tablespaces. I hoped to CREATE INDEX and use a slow TABLESPACE (see https://www.postgresql.org/docs/current/sql-createindex.html).
+    * It cannot create tablespaces. I hoped to `CREATE INDEX` and use a slow `TABLESPACE` (see https://www.postgresql.org/docs/current/sql-createindex.html).
 
-- https://github.com/stack-auth/pgmock
+- pgmock https://github.com/stack-auth/pgmock
 
     * Live demo: https://stack-auth.github.io/pgmock/
 
@@ -61,7 +62,9 @@ The live demo relies on the following:
     * Package: `pgmock 1.0.3`.
     Running `SELECT version();` returned `PostgreSQL 14.5 on i686-buildroot-linux-musl, compiled by i686-buildroot-linux-musl-gcc.br_real (Buildroot 2022.08) 12.1.0, 32-bit`.
 
-- [ ] https://github.com/snaplet/postgres-wasm
+- [ ] ~~Postgres WASM~~ https://github.com/snaplet/postgres-wasm
+
+    * "This repository has been archived by the owner on Sep 19, 2024. It is now read-only."
 
 
 ## Credits

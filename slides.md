@@ -189,12 +189,36 @@ tea=# explain select name, age from characters where age >= 40 limit 100;
 ```
 
 
+## Join strategies
+
+The join strategy (nested loop, hash join, merge join) chosen by the query planner is based on various factors such as table size, indexes, and statistics.
+
+This could affect the result.
+
+```sql
+ANALYZE;
+
+VACUUM ANALYZE;
+
+SET enable_hashjoin TO off;
+SET enable_nestloop TO off;
+/*
+"Enables or disables the query planner's use of merge-join plan types. The default is on."
+Sort-merge join is what we are interested in.
+*/
+SET enable_mergejoin TO on;
+```
+
+
 ## Futher reading
 
 - [PostgreSQL: Documentation: 16: 7.5. Sorting Rows (ORDER BY)](https://www.postgresql.org/docs/current/queries-order.html)
 > If sorting is not chosen, the rows will be returned in an unspecified order. The actual order in that case will depend on the scan and join plan types and the order on disk, but it must not be relied on. A particular output ordering can only be guaranteed if the sort step is explicitly chosen.
 
 - [PostgreSQL: Documentation: 16: 11.9. Index-Only Scans and Covering Indexes](https://www.postgresql.org/docs/current/indexes-index-only-scans.html)
+
+- [Scenarios That Trigger Autovacuum in PostgreSQL - Stormatics](https://stormatics.tech/blogs/scenarios-that-trigger-autovacuum-in-postgresql)
+[#archived](http://web.archive.org/web/20250116171623/https://stormatics.tech/blogs/scenarios-that-trigger-autovacuum-in-postgresql)
 
 ---
 
