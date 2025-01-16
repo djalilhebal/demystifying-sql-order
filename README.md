@@ -2,8 +2,7 @@
 
 A presentation, a set of PostgreSQL experiments, Web-based demo(s)...
 
-Take away:
-SQL order is unguaranteed, but it is not random.
+**Take away:** SQL order is unguaranteed, but it is not random.
 
 
 ## Remarks
@@ -71,37 +70,6 @@ The live demo relies on the following:
 
 - Slide border: "Black futuristic free border" by veeForu
 https://www.veeforu.com/border-png/black-futuristic-free-border-png/
-
-- Icon is AI-generated
-
-<details>
-<summary>Icon prompts</summary>
-
-### Icon prompts
-
-1. Create an icon for a PostgreSQL project, neon vibes, blue elephant, flat, minimalist, abstract, white background
-https://huggingface.co/spaces/stabilityai/stable-diffusion-3-medium
-![](assets/1.webp)
-
-2. Create an icon for a PostgreSQL project, neon vibes, blue elephant, flat, minimalist, abstract, chaotic, white background
-https://huggingface.co/spaces/mukaist/DALLE-4K
-![](assets/2.png)
-
-3. Create an icon for a PostgreSQL project, neon vibes, blue elephant, flat, minimalist, abstract, chaotic, hexagon motif, white background
-https://huggingface.co/spaces/mukaist/DALLE-4K
-![](assets/3.png)
-
-4. Create an icon for a PostgreSQL project, neon vibes, blue elephant, flat, minimalist, abstract, chaotic, hexagon motif, abstract shape art, white background, transparent background color
-https://huggingface.co/spaces/mukaist/DALLE-4K
-![](assets/4.png)
-
-5. Create a favicon for a PostgreSQL project, neon vibes, blue elephant, flat, minimalist, abstract, chaotic, hexagon motif, abstract shape art, white background, transparent background color
-![](assets/5.png)
-
-6. Create a favicon for a PostgreSQL project, neon vibes, blue elephant, flat, minimalist, abstract, chaotic, hexagon motif, abstract shape art, white background, transparent background color
-![](assets/6.png)
-
-</details>
 
 
 ## License
