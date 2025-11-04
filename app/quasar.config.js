@@ -110,7 +110,7 @@ module.exports = configure((/* ctx */) => ({
     config: {
       dark: true, // force dark theme
       brand: {
-        primary: '#9C27B0', // Purple
+        primary: '#6200EA', // Purple
       },
     },
     // iconSet: 'material-icons', // Quasar icon set

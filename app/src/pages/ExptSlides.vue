@@ -1,10 +1,30 @@
 <template>
-  <q-page class="flex flex-col">
-    <q-stepper ref="stepper" class="flex-grow" style="width: 100%;" v-model="step" contracted>
-      <q-step v-for="step in exptStore.steps" :name="step.name" :title="step.name + ''"
-        :done="step.done || step.commandExecuted">
+  <q-page class="flex" style="flex-direction: column;">
+    <div class="flex w-full q-px-md q-py-sm" style="
+    align-items: center;
+    justify-content: space-between;
+    ">
+      <q-btn @click="$router.push('/')"  icon="home" flat no-caps></q-btn>
+
+      <span class="text-h5">
+        Demystifying SQL Order:
+        <b>
+          {{ exptStore.name }}
+        </b>
+      </span>
+
+      <q-btn icon="code" href="https://github.com/djalilhebal/demystifying-sql-order" flat></q-btn>
+    </div>
+
+    <q-stepper flat contracted class="flex-grow" style="width: 100%;" v-model="step">
+      <q-step
+        v-for="step in exptStore.steps"
+        :key="step.id"
+        :name="step.name" :title="step.name + ''"
+        :done="step.done || step.commandExecuted"
+        >
         <section class="row">
-          <QMarkdown class="col-8 q-ma-md" content-class="text-body1" no-line-numbers>
+          <QMarkdown class="col-8 q-ma-md" no-line-numbers>
             ```sql
             {{ '\n' }}
             {{ step.command }}
@@ -22,7 +42,9 @@
 
         <q-separator class="q-ma-md"></q-separator>
 
-        <q-btn outline :disable="!step.explainable" :color="step.explainable ? 'white' : 'grey`'" label="Explain"
+        <q-btn
+          v-if="step.explainable"
+          outline :color="step.explainable ? 'white' : 'grey`'" label="Explain"
           :loading="step.explainLoading" @click="exptStore.explain(step)">
         </q-btn>
         <q-card v-if="step.explainOutput">
@@ -35,9 +57,13 @@
       </q-step>
 
       <template v-slot:navigation>
-        <q-stepper-navigation class="fixed-bottom">
-          <q-btn @click="$refs.stepper.next()" color="primary" label="Next" />
-          <q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Back" class="q-ml-sm" />
+        <q-stepper-navigation class="fixed-bottom" style="text-align: right;">
+          <q-btn
+            v-if="step > 1"
+            label="Back" outline color="white" class="q-mr-sm"
+            @click="stepper?.previous()"
+            />
+          <q-btn @click="stepper?.next()" color="primary" label="Next" />
         </q-stepper-navigation>
       </template>
     </q-stepper>
@@ -45,11 +71,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { QMarkdown } from '@quasar/quasar-ui-qmarkdown';
 import '@quasar/quasar-ui-qmarkdown/dist/index.css';
 import 'prismjs/components/prism-sql';
-import { useQuasar } from 'quasar';
+import { QStepper, useQuasar } from 'quasar';
 
 import KTable from './KTable.vue';
 
@@ -62,7 +88,7 @@ const props = defineProps({
 
 const $q = useQuasar();
 
-const stepper = ref(null);
+const stepper = ref<QStepper | null>(null);
 
 const step = ref(1);
 

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-import { createDb, DbType  } from 'src/core/db';
+import { createDb, DbType } from 'src/core/db';
 
 const fields = ['name', 'age'];
 
@@ -10,16 +10,16 @@ function getIsTarget(data: any) {
 }
 
 const SQL_COMMANDS = [
-`SELECT setseed(0.444);`,
+  'SELECT setseed(0.444);',
 
-`CREATE TABLE characters (
+  `CREATE TABLE characters (
   id SERIAL PRIMARY KEY,
   name TEXT,
   age INTEGER,
   description TEXT DEFAULT repeat(md5(random()::text), 2)
 );`,
 
-`/* C > D > E > A > B */
+  `/* C > D > E > A > B */
 INSERT INTO characters(name, age)
     VALUES
     ('Ciel', 13),
@@ -29,7 +29,7 @@ INSERT INTO characters(name, age)
     ('Baldroy', 37);
 `,
 
-`-- Insert 10,000 random entries
+  `-- Insert 10,000 random entries
 INSERT INTO characters (name, age)
 SELECT
     -- a random name starting with A-Z
@@ -40,24 +40,24 @@ FROM
     generate_series(1, 10000);
 `,
 
-`CREATE INDEX idx_characters_age ON characters(age);`,
+  'CREATE INDEX idx_characters_age ON characters(age);',
 
-`CREATE INDEX idx_characters_age_and_name ON characters(age, name);
+  `CREATE INDEX idx_characters_age_and_name ON characters(age, name);
 -- Or:
 --CREATE INDEX idx_characters_age_include_name ON characters(age) INCLUDE (name);
 `,
 
-`/* To update stats */
+  `/* To update stats */
 VACUUM ANALYZE;
 `,
 
-`SELECT name, age
+  `SELECT name, age
 FROM characters
 WHERE age >= 40
 LIMIT 10;
 `,
 
-`SELECT name, age
+  `SELECT name, age
 FROM characters
 WHERE age >= 40
 LIMIT 700;
@@ -65,7 +65,6 @@ LIMIT 700;
 ];
 
 export const useExptTwoStore = defineStore('expt-two', () => {
-
   const db = ref<DbType | null>(null);
 
   async function initDb() {
@@ -73,9 +72,9 @@ export const useExptTwoStore = defineStore('expt-two', () => {
   }
 
   async function runCommand(command: string): Promise<any> {
-    console.log('runCommand', command);
+    console.debug('[runCommand] command', command);
     const result = await db.value?.query(command);
-    console.log('runCommand', result);
+    console.debug('[runCommand] result', result);
     return result;
   }
 
@@ -120,6 +119,7 @@ export const useExptTwoStore = defineStore('expt-two', () => {
   const steps = ref(SQL_COMMANDS.map((command, index) => {
     const stepNumber = index + 1;
     return {
+      id: stepNumber,
       name: stepNumber,
       done: false,
 
@@ -136,5 +136,8 @@ export const useExptTwoStore = defineStore('expt-two', () => {
     };
   }));
 
-  return { steps, fields, getIsTarget, initDb, explain, execute, runCommand };
+  return {
+    name: 'Two',
+    steps, fields, getIsTarget, initDb, explain, execute, runCommand,
+  };
 });

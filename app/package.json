@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
-    "test": "echo \"No test specified\" && exit 0",
+    "lint:fix": "eslint --fix --ext .js,.ts,.vue ./",
     "dev": "quasar dev",
     "build": "quasar build"
   },
@@ -17,7 +17,7 @@
     "pg": "^8.12.0",
     "pgmock": "^1.0.3",
     "pinia": "^2.0.11",
-    "quasar": "^2.8.0",
+    "quasar": "^2.16.0",
     "vue": "^3.4.18",
     "vue-router": "^4.0.12"
   },
@@ -36,7 +36,7 @@
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "engines": {
-    "node": "^20 || ^18 || ^16",
+    "node": ">= 22",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   }

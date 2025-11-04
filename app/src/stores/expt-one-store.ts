@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-import { createDb, DbType  } from 'src/core/db';
+import { createDb, DbType } from 'src/core/db';
 
 const fields = ['id', 'value'];
 
@@ -10,13 +10,13 @@ function getIsTarget(data: any) {
 }
 
 const SQL_COMMANDS = [
-`CREATE TABLE names (
+  `CREATE TABLE names (
     id int primary key generated always as identity,
     value text
 );
 `,
 
-`INSERT INTO names (value) VALUES
+  `INSERT INTO names (value) VALUES
     ('alice'),
     ('bob'),
     ('ciara'),
@@ -24,18 +24,17 @@ const SQL_COMMANDS = [
     ('emma');
 `,
 
-`SELECT * FROM names;`,
+  'SELECT * FROM names;',
 
-`UPDATE names SET value = 'barbara' WHERE id = 2;`,
+  'UPDATE names SET value = \'barbara\' WHERE id = 2;',
 
-`/* Optional: */
+  `/* Optional: */
 VACUUM names;`,
 
-`SELECT * FROM names;`,
+  'SELECT * FROM names;',
 ];
 
 export const useExptOneStore = defineStore('expt-one', () => {
-
   const db = ref<DbType | null>(null);
 
   async function initDb() {
@@ -43,9 +42,9 @@ export const useExptOneStore = defineStore('expt-one', () => {
   }
 
   async function runCommand(command: string): Promise<any> {
-    console.log('runCommand', command);
+    console.debug('[runCommand] command', command);
     const result = await db.value?.query(command);
-    console.log('runCommand', result);
+    console.debug('[runCommand] result', result);
     return result;
   }
 
@@ -90,6 +89,7 @@ export const useExptOneStore = defineStore('expt-one', () => {
   const steps = ref(SQL_COMMANDS.map((command, index) => {
     const stepNumber = index + 1;
     return {
+      id: stepNumber,
       name: stepNumber,
       done: false,
 
@@ -106,5 +106,8 @@ export const useExptOneStore = defineStore('expt-one', () => {
     };
   }));
 
-  return { steps, fields, getIsTarget, initDb, explain, execute, runCommand };
+  return {
+    name: 'One',
+    steps, fields, getIsTarget, initDb, explain, execute, runCommand,
+  };
 });

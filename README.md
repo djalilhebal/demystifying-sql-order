@@ -5,7 +5,15 @@ A presentation, a set of PostgreSQL experiments, Web-based demo(s)...
 **Take away:** SQL order is unguaranteed, but it is not random.
 
 
-## Remarks
+## Usage
+
+```sh
+cd app
+npm ci
+npm run dev
+```
+
+### Remarks
 
 - To ensure reproducibility, we specify a seed at the start of the experiment:
 ```sql
@@ -16,6 +24,8 @@ SELECT setseed(0.666);
 ## Technologies used
 
 The live demo relies on the following:
+
+- `pgmock`
 
 - Quasar v2
 
@@ -30,8 +40,6 @@ The live demo relies on the following:
     * [QMarkdown](https://github.com/quasarframework/quasar-ui-qmarkdown)
         + PrismJS
         + `markdown-it`
-
-- `pgmock`
 
 
 ### Postgres in the browser options
@@ -68,8 +76,8 @@ The live demo relies on the following:
 
 ## Credits
 
-- Slide border: "Black futuristic free border" by veeForu
-https://www.veeforu.com/border-png/black-futuristic-free-border-png/
+- Slide border: ["Black futuristic free border" by veeForu](https://www.veeforu.com/border-png/black-futuristic-free-border-png/)
+  * Note: Unused.
 
 
 ## License

@@ -7,5 +7,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useMeta } from 'quasar';
+
+useMeta({
+  title: 'Demystifying SQL Order',
+});
 </script>
